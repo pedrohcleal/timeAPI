@@ -5,7 +5,6 @@
 ![BeautifulSoup](https://img.shields.io/badge/BeautifulSoup-FFD700?style=flat&logo=python&logoColor=black)
 ![requests](https://img.shields.io/badge/requests-FF6F61?style=flat&logo=requests&logoColor=white)
 ![webdriver_manager](https://img.shields.io/badge/webdriver_manager-00B2A9?style=flat&logo=python&logoColor=white)
-
 # Temperature API
 
 This is an API that retrieves the current temperature of cities around the world. The API uses the [Time and Date](https://www.timeanddate.com) website to get weather information.
