@@ -27,7 +27,7 @@ This is an API that retrieves the current temperature of cities around the world
 Clone this repository and install the dependencies:
 
 ```bash
-git clone https://github.com/yourusername/timeAPI.git
+git clone https://github.com/pedrohcleal/timeAPI.git
 cd timeAPI
 pip install -r requirements.txt
 ```
