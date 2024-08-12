@@ -1,4 +1,4 @@
-![Em Desenvolvimento](https://img.shields.io/badge/status-em%20desenvolvimento-orange)
+![In development](https://img.shields.io/badge/status-em%20desenvolvimento-orange)
 
 ![FastAPI](https://img.shields.io/badge/FastAPI-007ACC?style=flat&logo=fastapi&logoColor=white)
 ![Selenium](https://img.shields.io/badge/Selenium-43B02A?style=flat&logo=selenium&logoColor=white)
