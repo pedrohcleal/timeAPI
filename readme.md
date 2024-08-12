@@ -1,3 +1,9 @@
+![FastAPI](https://img.shields.io/badge/FastAPI-007ACC?style=flat&logo=fastapi&logoColor=white)
+![Selenium](https://img.shields.io/badge/Selenium-43B02A?style=flat&logo=selenium&logoColor=white)
+![BeautifulSoup](https://img.shields.io/badge/BeautifulSoup-FFD700?style=flat&logo=python&logoColor=black)
+![requests](https://img.shields.io/badge/requests-FF6F61?style=flat&logo=requests&logoColor=white)
+![webdriver_manager](https://img.shields.io/badge/webdriver_manager-00B2A9?style=flat&logo=python&logoColor=white)
+
 # Temperature API
 
 Esta é uma API que consulta a temperatura atual de cidades ao redor do mundo. A API utiliza o site [Time and Date](https://www.timeanddate.com) para obter informações sobre o clima.
