@@ -6,71 +6,64 @@
 
 # Temperature API
 
-Esta é uma API que consulta a temperatura atual de cidades ao redor do mundo. A API utiliza o site [Time and Date](https://www.timeanddate.com) para obter informações sobre o clima.
+This is an API that retrieves the current temperature of cities around the world. The API uses the [Time and Date](https://www.timeanddate.com) website to get weather information.
 
-## Tecnologias Utilizadas
+## Technologies Used
 
-- **FastAPI**: Framework web para criar a API.
-- **Selenium**: Para automação de navegação e coleta de dados das páginas do Time and Date.
-- **BeautifulSoup**: Para análise e extração de dados das páginas HTML.
-- **requests**: Para fazer requisições HTTP.
-- **webdriver_manager**: Para gerenciar o WebDriver do Chrome.
+- **FastAPI**: Web framework for creating the API.
+- **Selenium**: For automating navigation and data collection from Time and Date pages.
+- **BeautifulSoup**: For parsing and extracting data from HTML pages.
+- **requests**: For making HTTP requests.
+- **webdriver_manager**: For managing the Chrome WebDriver.
 
-## Funcionalidades
+## Features
 
-- **/all/countries**: Retorna a lista de todos os países disponíveis para consulta.
-- **/all/cities**: Retorna a lista de todas as cidades disponíveis para consulta.
-- **/{country}/{city}**: Retorna a temperatura atual da cidade especificada no país especificado.
+- **/all/countries**: Returns a list of all available countries for queries.
+- **/all/cities**: Returns a list of all available cities for queries.
+- **/{country}/{city}**: Returns the current temperature of the specified city in the specified country.
 
-## Instalação
+## Installation
 
-Clone este repositório e instale as dependências:
+Clone this repository and install the dependencies:
 
 ```bash
-git clone https://github.com/seuusuario/timeAPI.git
+git clone https://github.com/yourusername/timeAPI.git
 cd timeAPI
 pip install -r requirements.txt
 ```
 
-## Uso
+## Usage
 
-1. **Atualizar Cidades**:
-   Para atualizar a lista de cidades disponíveis, execute o script `handler.py`. Isso fará com que o Selenium colete os dados das cidades do Time and Date.
+1. **Update Cities**:
+   To update the list of available cities, run the `handler.py` script. This will use Selenium to collect data from Time and Date.
 
    ```bash
    python handler.py
    ```
 
-2. **Executar o Servidor FastAPI**:
-   Para iniciar o servidor da API, execute o seguinte comando:
+2. **Run the FastAPI Server**:
+   To start the API server, run the following command:
 
    ```bash
    uvicorn main:app --reload
    ```
 
-   O servidor estará disponível em [http://127.0.0.1:8000](http://127.0.0.1:8000).
+   The server will be available at [http://127.0.0.1:8000](http://127.0.0.1:8000).
 
-## Arquitetura do Projeto
+## Project Structure
 
-- **handler.py**: Contém funções para coleta e processamento de dados das cidades e temperaturas.
-- **main.py**: Define os endpoints da API usando FastAPI.
-- **utils.py**: Funções auxiliares para sanitização de texto e salvamento de dados.
+- **handler.py**: Contains functions for collecting and processing city and temperature data.
+- **main.py**: Defines the API endpoints using FastAPI.
+- **utils.py**: Helper functions for text sanitization and data saving.
 
-## Dependências
+## Dependencies
 
-Certifique-se de ter o `requirements.txt` atualizado com todas as bibliotecas necessárias. O arquivo `requirements.txt` pode ser gerado com:
+Make sure to keep the `requirements.txt` file updated with all the necessary libraries. The `requirements.txt` file can be generated with:
 
 ```bash
 pip freeze > requirements.txt
 ```
 
-## Contribuição
+## Contribution
 
-Se você quiser contribuir para o projeto, sinta-se à vontade para enviar pull requests. Para problemas ou dúvidas, abra uma issue no GitHub.
-
-## Licença
-
-Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
-```
-
-Você pode ajustar qualquer detalhe conforme necessário. Se precisar de mais informações ou ajustes, é só me falar!
+If you would like to contribute to the project, feel free to submit pull requests. For issues or questions, open an issue on GitHub.
