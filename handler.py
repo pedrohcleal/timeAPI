@@ -1,7 +1,6 @@
 from typing import List
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.remote.webelement import WebElement
 from webdriver_manager.chrome import ChromeDriverManager
@@ -66,10 +65,10 @@ def update_cities_bs4(): #to do
 if __name__ == '__main__':
     try:
         #driver.get('https://www.timeanddate.com/weather/usa/new-york')
-        update_cities(driver)
+        update_cities_selenium(driver)
         # Encontrar os elementos do formulário de login
-        username_field = driver.find_element(By.CSS_SELECTOR, '#qlook > div.h2')
-        print(username_field.text)
+        #username_field = driver.find_element(By.CSS_SELECTOR, '#qlook > div.h2')
+        #print(username_field.text)
         
         # 
     finally:
