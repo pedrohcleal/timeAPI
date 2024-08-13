@@ -1,22 +1,9 @@
+import requests, json
 from typing import List
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.remote.webelement import WebElement
-from webdriver_manager.chrome import ChromeDriverManager
+from .utils import save_cities
+from bs4 import BeautifulSoup as bs4
 from time import sleep
-from countries import countries
-from utils import save_cities
-
-import requests
-from bs4 import BeautifulSoup
-
-options = webdriver.ChromeOptions()
-options.add_argument('--ignore-certificate-errors')
-options.add_argument('--ignore-ssl-errors')
-options.add_argument('--headless')
-service = Service(ChromeDriverManager().install())
-driver = webdriver.Chrome(service=service, options=options)
+from unidecode import unidecode
 
 continet_list_links = [
     'https://www.timeanddate.com/weather/?continent=namerica',
@@ -29,26 +16,12 @@ continet_list_links = [
 table_css_selector = 'body > div.main-content-div > section.bg--grey.pdflexi-t--small > div > section > div:nth-child(3) > div > table > tbody > tr:nth-child(1)'
 names_cities  = 'body > main > article > section.pdflexi > div > table > tbody > tr > td > a'
 
-def update_cities_selenium(driver: webdriver.Chrome):
-    cities = []  
-    for i in countries:
-        try:
-            driver.get(f'https://www.timeanddate.com/weather/{i}')
-            table: List[WebElement] = driver.find_elements(By.CSS_SELECTOR, names_cities)
-            print(f'quantidade de cidades {len(table)}')
-            for row in table:
-                print(row.text)
-                cities.append(row.text)
-        except Exception:
-            print(f'pulando pais {i}, ERRO')
-    save_cities(cities)
-
 def get_temperature(country, city):
     url = f'https://www.timeanddate.com/weather/{country}/{city}'
     response = requests.get(url)
     
     if response.status_code == 200:
-        soup = BeautifulSoup(response.text, 'html.parser')
+        soup = bs4(response.text, 'html.parser')
         element = soup.select_one('#qlook > div.h2')
         if element:
             temperature = element.text.strip()
@@ -58,19 +31,34 @@ def get_temperature(country, city):
     else:
         return f"Failed to retrieve data, status code: {response.status_code}"
 
-def update_cities_bs4(): #to do
-    pass
+def update_cities_requests(countries, cities):
+    seletor = 'body > main > article > section.pdflexi > div > table > *'
 
+    for country in countries:
+        sleep(0.1)
+        try:
+            response = requests.get(f'https://www.timeanddate.com/weather/{country}')
+            if response.status_code == 200:
+                soup = bs4(response.text, 'html.parser')
+                table = soup.select(seletor) 
+                #[cities.append(c.text) for c in row.select('a')] for row in table if c.text not in cities]
+                for row in table:
+                    city_list = row.select('a')
+                    for c in city_list:
+                        if c.text not in cities:
+                            cities.append(unidecode(c.text))
+            else:
+                print(f'Failed to get data for country {country}, status code: {response.status_code}')
+        except Exception as e:
+            print(f'Skipping country {country}, ERRO: {e}')
+    save_cities(cities)
 
 if __name__ == '__main__':
-    try:
-        #driver.get('https://www.timeanddate.com/weather/usa/new-york')
-        update_cities_selenium(driver)
-        # Encontrar os elementos do formulário de login
-        #username_field = driver.find_element(By.CSS_SELECTOR, '#qlook > div.h2')
-        #print(username_field.text)
-        
-        # 
-    finally:
-        # Fechar o navegador
-        driver.quit()
+    json_cities = open('cities.json').read()
+    cities: List[str] = json.loads(json_cities)
+    
+    json_countries = open('countries.json').read()
+    countries: List[str] = json.loads(json_countries)
+    
+    update_cities_requests(countries, cities)
+    print('finish')
