@@ -1,6 +1,5 @@
 import requests, json
 from typing import List
-from .utils import save_cities
 from bs4 import BeautifulSoup as bs4
 from time import sleep
 from unidecode import unidecode
