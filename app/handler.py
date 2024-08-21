@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup as bs4
 from time import sleep
 from unidecode import unidecode
+from crud import get_db_connection, get_all_countries, get_all_cities, insert_city
 
 
 def get_temperature(country, city):
@@ -20,26 +21,31 @@ def get_temperature(country, city):
         return f"Failed to retrieve data, status code: {response.status_code}"
 
 
-def update_cities_requests(countries, cities):
+def update_cities_requests(conn, countries, cities):
     seletor = "body > main > article > section.pdflexi > div > table > *"
 
     for country in countries:
-        sleep(0.1)
         try:
             response = requests.get(f"https://www.timeanddate.com/weather/{country}")
             if response.status_code == 200:
                 soup = bs4(response.text, "html.parser")
                 table = soup.select(seletor)
-                # [cities.append(c.text) for c in row.select('a')]
-                # for row in table if c.text not in cities]
                 for row in table:
                     city_list = row.select("a")
-                    for c in city_list:
-                        if c.text not in cities:
-                            cities.append(unidecode(c.text))
+                    for city in city_list:
+                        city = unidecode(city.text).strip().lower().replace(" ", "-")
+                        if city not in cities:
+                            insert_city(conn=conn, city=city)
             else:
                 print(
                     f"Failed to get data for country {country}, status code: {response.status_code}"
                 )
         except Exception as e:
             print(f"Skipping country {country}, ERRO: {e}")
+
+
+if __name__ == "__main__":
+    with get_db_connection() as conn:
+        countries = get_all_countries(conn)
+        cities = get_all_cities(conn)
+        update_cities_requests(conn=conn, countries=countries, cities=cities)
