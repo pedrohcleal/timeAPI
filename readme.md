@@ -1,6 +1,5 @@
 ![In development](https://img.shields.io/badge/status-In%20development-red)
 ![FastAPI](https://img.shields.io/badge/FastAPI-007ACC?style=flat&logo=fastapi&logoColor=white)
-![Selenium](https://img.shields.io/badge/Selenium-43B02A?style=flat&logo=selenium&logoColor=white)
 ![BeautifulSoup](https://img.shields.io/badge/BeautifulSoup-FFD700?style=flat&logo=python&logoColor=black)
 ![requests](https://img.shields.io/badge/requests-FF6F61?style=flat&logo=requests&logoColor=white)
 ![webdriver_manager](https://img.shields.io/badge/webdriver_manager-00B2A9?style=flat&logo=python&logoColor=white)
@@ -11,10 +10,8 @@ This is an API that retrieves the current temperature of cities around the world
 ## Technologies Used
 
 - **FastAPI**: Web framework for creating the API.
-- **Selenium**: For automating navigation and data collection from Time and Date pages.
 - **BeautifulSoup**: For parsing and extracting data from HTML pages.
 - **requests**: For making HTTP requests.
-- **webdriver_manager**: For managing the Chrome WebDriver.
 
 ## Features
 
@@ -54,7 +51,7 @@ pip install -r requirements.txt
 
 - **handler.py**: Contains functions for collecting and processing city and temperature data.
 - **main.py**: Defines the API endpoints using FastAPI.
-- **utils.py**: Helper functions for text sanitization and data saving.
+- **crud.py**: Helper functions for text sanitization and data saving.
 
 ## Dependencies
 
