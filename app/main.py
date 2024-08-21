@@ -7,10 +7,6 @@ from .crud import get_all_cities, get_all_countries, get_db_connection
 
 app = FastAPI()
 
-with get_db_connection() as conn:
-    countries = get_all_countries(conn)
-    cities = get_all_cities(conn)
-
 
 @app.get("/")
 async def get_main() -> JSONResponse:
@@ -19,16 +15,23 @@ async def get_main() -> JSONResponse:
 
 @app.get("/all/countries")
 async def read_all_countries() -> JSONResponse:
+    with get_db_connection() as conn:
+        countries = get_all_countries(conn)
     return JSONResponse(content={"countries": countries}, status_code=200)
 
 
 @app.get("/all/cities")
 async def read_all_cities() -> JSONResponse:
+    with get_db_connection() as conn:
+        cities = get_all_cities(conn)
     return JSONResponse(content={"cities": cities}, status_code=200)
 
 
 @app.get("/{country}/{city}")
 async def read_item(country: str, city: str) -> JSONResponse:
+    with get_db_connection() as conn:
+        cities = get_all_cities(conn)
+        countries = get_all_countries(conn)
     if country not in countries:
         raise HTTPException(status_code=404, detail="Country not located")
     if city not in cities:
