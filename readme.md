@@ -51,7 +51,7 @@ pip install -r requirements.txt
 
 - **handler.py**: Contains functions for collecting and processing city and temperature data.
 - **main.py**: Defines the API endpoints using FastAPI.
-- **utils.py**: Helper functions for text sanitization and data saving.
+- **crud.py**: Helper functions for text sanitization and data saving.
 
 ## Dependencies
 
