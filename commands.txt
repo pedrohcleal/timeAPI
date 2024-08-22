@@ -1,3 +1,8 @@
 # check all files
-
 pre-commit run --all-files
+
+# check tipyng
+mypy .
+
+# run tests
+pytests

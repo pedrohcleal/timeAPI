@@ -1,22 +1,4 @@
 import sqlite3
-import os
-from contextlib import contextmanager
-from typing import Generator
-
-
-DATABASE: str = os.path.join(os.path.dirname(__file__), "timeapi.db")
-
-
-@contextmanager
-def get_db_connection() -> Generator[sqlite3.Connection, None, None]:
-    conn = sqlite3.connect(DATABASE, timeout=30.0)
-    try:
-        yield conn
-    except sqlite3.Error as e:
-        print(f"DB Error: {e}")
-        raise
-    finally:
-        conn.close()
 
 
 def get_all_countries(conn) -> list[str]:

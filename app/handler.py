@@ -1,7 +1,8 @@
 import requests
 from bs4 import BeautifulSoup as bs4
 from unidecode import unidecode
-from .crud import get_db_connection, get_all_countries, get_all_cities, insert_city
+from app.crud import get_all_countries, get_all_cities, insert_city
+from app.db_config import get_db_connection
 
 
 def get_temperature(country, city):

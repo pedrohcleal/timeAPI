@@ -1,8 +1,9 @@
 from fastapi import FastAPI
-from .handler import get_temperature
+from app.handler import get_temperature
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
-from .crud import get_all_cities, get_all_countries, get_db_connection
+from app.crud import get_all_cities, get_all_countries
+from app.db_config import get_db_connection
 
 
 app = FastAPI()
