@@ -29,7 +29,7 @@ async def read_all_cities() -> JSONResponse:
 
 
 @app.get("/{country}/{city}")
-async def read_item(country: str, city: str) -> JSONResponse:
+async def temperature_city(country: str, city: str) -> JSONResponse:
     with get_db_connection() as conn:
         cities = get_all_cities(conn)
         countries = get_all_countries(conn)

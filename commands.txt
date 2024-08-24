@@ -5,4 +5,4 @@ pre-commit run --all-files
 mypy .
 
 # run tests
-pytests
+pytest
