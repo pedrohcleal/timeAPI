@@ -42,7 +42,8 @@ pip install -r requirements.txt
    To start the API server, run the following command:
 
    ```bash
-   uvicorn main:app --reload
+   cd app
+   fastapi dev main.py
    ```
 
    The server will be available at [http://127.0.0.1:8000](http://127.0.0.1:8000).

@@ -4,13 +4,22 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
 from app.crud import get_all_cities, get_all_countries
 from app.db_config import get_db_connection
+from fastapi.middleware.cors import CORSMiddleware
 
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://127.0.0.1:5500"],  # Lista de origens permitidas
+    allow_credentials=True,
+    allow_methods=["*"],  # Permite todos os métodos
+    allow_headers=["*"],  # Permite todos os headers
+)
+
 
 @app.get("/")
-async def get_main() -> JSONResponse:
+async def health_check() -> JSONResponse:
     return JSONResponse(content="Server OK", status_code=200)
 
 
