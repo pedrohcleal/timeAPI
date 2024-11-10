@@ -13,7 +13,7 @@ def get_all_countries(conn) -> list[str]:
 
 def get_all_cities(conn) -> list[str]:
     try:
-        cities = conn.execute("SELECT * FROM cities").fetchall()
+        cities = conn.execute("SELECT city FROM cities_and_countries").fetchall()
         cities = [x[0] for x in cities]
         return cities
     except sqlite3.Error as e:
@@ -21,20 +21,13 @@ def get_all_cities(conn) -> list[str]:
         return []
 
 
-def insert_into_table(conn: sqlite3.Connection, table: str, value: str) -> bool:
+def insert_into_table(conn: sqlite3.Connection, city: str, country: str) -> bool:
     try:
-        query = f'INSERT INTO {table} ({"country" if table == "countries" else "city"}) VALUES (?)'
-        conn.execute(query, (value,))
+        query = f"""INSERT INTO cities_and_countries
+        VALUES (?, ?)"""
+        conn.execute(query, (city, country))
         conn.commit()
         return True
     except sqlite3.Error as e:
         print(f"Error inserting value into {table}: {e}")
         return False
-
-
-def insert_country(conn: sqlite3.Connection, country: str) -> bool:
-    return insert_into_table(conn, "countries", country)
-
-
-def insert_city(conn: sqlite3.Connection, city: str) -> bool:
-    return insert_into_table(conn, "cities", city)

@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup as bs4
 from unidecode import unidecode
-from app.crud import get_all_countries, get_all_cities, insert_city
+from app.crud import get_all_countries, get_all_cities
 from app.db_config import get_db_connection
 
 
@@ -21,9 +21,11 @@ def get_temperature(country, city):
         return f"Failed to retrieve data, status code: {response.status_code}"
 
 
-def update_cities_requests(conn, countries, cities):
+def update_pairs_city_country(conn) -> list[str]:
+    countries: list[str] = get_all_countries(conn)
+    cities: list[str] = get_all_cities(conn)
     seletor = "body > main > article > section.pdflexi > div > table > *"
-
+    fails = []
     for country in countries:
         try:
             response = requests.get(f"https://www.timeanddate.com/weather/{country}")
@@ -35,17 +37,13 @@ def update_cities_requests(conn, countries, cities):
                     for city in city_list:
                         city = unidecode(city.text).strip().lower().replace(" ", "-")
                         if city not in cities:
-                            insert_city(conn=conn, city=city)
+                            insert_into_table(conn=conn, city=city, country=country)
             else:
                 print(
-                    f"Failed to get data for country {country}, status code: {response.status_code}"
+                    f"Failed to get data for country '{country}', status code: '{response.status_code}'"
                 )
+                fails.append(f"Failed to get data for country '{country}', status code: '{response.status_code}'")
         except Exception as e:
-            print(f"Skipping country {country}, ERRO: {e}")
-
-
-if __name__ == "__main__":
-    with get_db_connection() as conn:
-        countries = get_all_countries(conn)
-        cities = get_all_cities(conn)
-        update_cities_requests(conn=conn, countries=countries, cities=cities)
+            print(f"Skipping country '{country}', ERRO: '{e}'")
+            fails.append(f"Skipping country '{country}', ERRO: '{e}'")
+    return fails
