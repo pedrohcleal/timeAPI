@@ -50,8 +50,11 @@ async def temperature_city(country: str, city: str) -> JSONResponse:
     temperature = get_temperature(country, city)
     return JSONResponse(content={"temperature": temperature}, status_code=200)
 
-@app.get('/update_pairs_city_country')
+
+@app.get("/update_pairs_city_country")
 async def update_pairs() -> JSONResponse:
     with get_db_connection() as conn:
         fails = update_pairs_city_country(conn)
-    return JSONResponse(content={'message': 'Pares atualizados', 'falhas': fails}, status_code=200)
+    return JSONResponse(
+        content={"message": "Pares atualizados", "falhas": fails}, status_code=200
+    )

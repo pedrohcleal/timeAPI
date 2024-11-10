@@ -42,7 +42,9 @@ def update_pairs_city_country(conn) -> list[str]:
                 print(
                     f"Failed to get data for country '{country}', status code: '{response.status_code}'"
                 )
-                fails.append(f"Failed to get data for country '{country}', status code: '{response.status_code}'")
+                fails.append(
+                    f"Failed to get data for country '{country}', status code: '{response.status_code}'"
+                )
         except Exception as e:
             print(f"Skipping country '{country}', ERRO: '{e}'")
             fails.append(f"Skipping country '{country}', ERRO: '{e}'")

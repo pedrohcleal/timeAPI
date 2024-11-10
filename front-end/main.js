@@ -21,7 +21,7 @@ function displayData(data) {
     const container = document.getElementById('data-container');
     container.innerHTML = ''; // Limpa o conteúdo anterior
     console.log(data.countries)
-    
+
     if (Array.isArray(data.countries)) {
         const ul = document.createElement('ul');
         data.countries.forEach(item => {
