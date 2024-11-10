@@ -3,33 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Time API</title>
+    <title>Seleção de País e Cidade</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Get Time!</h1>
-        <nav>
-            <ul>
-                <li><a href="#" class="active">Home</a></li>
-            </ul>
-        </nav>
-    </header>
+    <div class="container">
+        <h1>Selecione o País e Cidade</h1>
+        
+        <div class="select-group">
+            <label for="country">País:</label>
+            <select id="country" name="country">
+                <option value="">Selecione um país</option>
+            </select>
+        </div>
 
-    <main>
-        <section class="container">
-            <h2>Dados do Backend</h2>
-            <div id="data-container">
-                <!-- Dados do backend serão inseridos aqui -->
-            </div>
-            <button id="fetchData">Carregar Dados</button>
-        </section>
-    </main>
+        <div class="select-group">
+            <label for="city">Cidade:</label>
+            <select id="city" name="city" disabled>
+                <option value="">Primeiro selecione um país</option>
+            </select>
+        </div>
 
-    <footer>
-        <p>&copy; 2024 Minha Aplicação</p>
-    </footer>
-
-    <script src="main.js"></script>
+        <div class="selection-display">
+            <p>Seleção atual:</p>
+            <p id="current-selection">Nenhuma seleção feita</p>
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>

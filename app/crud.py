@@ -1,9 +1,17 @@
 import sqlite3
 
+def get_only_countries(conn) -> list[str]:
+    try:
+        countries = conn.execute("SELECT * FROM cities_and_countries").fetchall()
+        countries = [x[0] for x in countries]
+        return countries
+    except sqlite3.Error as e:
+        print(f"SQL error = {e}")
+        return []
 
 def get_all_countries(conn) -> list[str]:
     try:
-        countries = conn.execute("SELECT * FROM countries").fetchall()
+        countries = conn.execute("SELECT DISTINCT country FROM cities_and_countries").fetchall()
         countries = [x[0] for x in countries]
         return countries
     except sqlite3.Error as e:
