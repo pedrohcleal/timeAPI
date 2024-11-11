@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <h1>Selecione o País e Cidade</h1>
-        
+
         <div class="select-group">
             <label for="country">País:</label>
             <select id="country" name="country">
@@ -25,9 +25,21 @@
         </div>
 
         <div class="selection-display">
-            <p>Seleção atual:</p>
-            <p id="current-selection">Nenhuma seleção feita</p>
+            <button id="timeBttn">
+                <p>Ver tempo atual cº</p>
+            </button>
+            <p id="timeTemp">Selecione pais e cidade</p>
         </div>
+
+        <div class="selection-display">
+            <button id="UpdatePairsBttn">
+                <p>Atualizar Pares de Pais e Cidades</p>
+            </button>
+            <p id="paresRetorno"></p>
+        <!--Falta fazer script-->
+        </div>
+
+
     </div>
     <script src="script.js"></script>
 </body>

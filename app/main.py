@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from app.handler import get_temperature, update_pairs_city_country
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
-from app.crud import get_all_cities, get_all_countries
+from app.crud import get_all_cities, get_all_countries, get_pairs_city_and_countries
 from app.db_config import get_db_connection
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -58,3 +58,10 @@ async def update_pairs() -> JSONResponse:
     return JSONResponse(
         content={"message": "Pares atualizados", "falhas": fails}, status_code=200
     )
+
+
+@app.get("/get_pairs")
+async def get_pairs() -> JSONResponse:
+    with get_db_connection() as conn:
+        pairs: dict[str, list[str]] = get_pairs_city_and_countries(conn=conn)
+    return JSONResponse(content=pairs, status_code=200)

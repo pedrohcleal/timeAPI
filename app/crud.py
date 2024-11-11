@@ -1,7 +1,7 @@
 import sqlite3
 
 
-def get_only_countries(conn) -> list[str]:
+def get_static_countries(conn) -> list[str]:
     try:
         countries = conn.execute("SELECT * FROM cities_and_countries").fetchall()
         countries = [x[0] for x in countries]
@@ -43,3 +43,21 @@ def insert_into_table(conn: sqlite3.Connection, city: str, country: str) -> bool
     except sqlite3.Error as e:
         print(f"Error inserting value, {e}")
         return False
+
+
+def get_pairs_city_and_countries(conn) -> dict[str, list[str]]:
+    pairs = {}
+    try:
+        cities = conn.execute(
+            "SELECT city, country FROM cities_and_countries"
+        ).fetchall()
+        for city, country in cities:
+            if country in pairs.keys():
+                pairs[country].append(city)
+            else:
+                pairs[country] = [city]
+            # (pairs)
+        return pairs
+    except sqlite3.Error as e:
+        print(f"SQL error = {e}")
+        return []

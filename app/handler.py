@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup as bs4
 from unidecode import unidecode
-from app.crud import get_all_countries, get_all_cities
+from app.crud import get_static_countries, get_all_cities, insert_into_table
 from app.db_config import get_db_connection
 
 
@@ -22,7 +22,7 @@ def get_temperature(country, city):
 
 
 def update_pairs_city_country(conn) -> list[str]:
-    countries: list[str] = get_all_countries(conn)
+    countries: list[str] = get_static_countries(conn)
     cities: list[str] = get_all_cities(conn)
     seletor = "body > main > article > section.pdflexi > div > table > *"
     fails = []
