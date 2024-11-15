@@ -3,7 +3,7 @@ import sqlite3
 
 def get_static_countries(conn) -> list[str]:
     try:
-        countries = conn.execute("SELECT * FROM cities_and_countries").fetchall()
+        countries = conn.execute("SELECT country FROM countries").fetchall()
         countries = [x[0] for x in countries]
         return countries
     except sqlite3.Error as e:
@@ -33,7 +33,7 @@ def get_all_cities(conn) -> list[str]:
         return []
 
 
-def insert_into_table(conn: sqlite3.Connection, city: str, country: str) -> bool:
+def insert_city_country(conn: sqlite3.Connection, city: str, country: str) -> bool:
     try:
         query = f"""INSERT INTO cities_and_countries
         VALUES (?, ?)"""

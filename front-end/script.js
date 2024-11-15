@@ -7,6 +7,8 @@ const citySelect = document.getElementById('city');
 const currentSelection = document.getElementById('current-selection');
 const timeBttn = document.getElementById('timeBttn');
 const currTemp = document.getElementById('timeTemp');
+const updateParsBttn = document.getElementById('UpdatePairsBttn');
+const paresRetorno = document.getElementById('paresRetorno');
 
 // Armazena os dados completos
 let pairsData = {};
@@ -41,6 +43,20 @@ async function get_temperature() {
         showError('Não foi possível carregar os dados');
     }
 
+}
+
+async function fetch_update_pairs() {
+    paresRetorno.textContent = 'Atualizando pares Cidade/País aguarde'
+    try {
+        const response = await fetch(`${API_BASE_URL}/update_pairs_city_country`)
+        if (!response.ok) throw new Error('Erro ao carregar dados');
+        let final_pairs = await response.json();
+        console.log(final_pairs)
+        paresRetorno.textContent = `${final_pairs.message} - Falhas = ${final_pairs.falhas}`
+    } catch (error) {
+        console.error('Erro ao carregar dados:', error);
+        showError('Não foi possível carregar os dados');
+    }
 }
 
 
@@ -120,5 +136,6 @@ citySelect.addEventListener('change', updateSelectionDisplay);
 
 timeBttn.addEventListener('click', get_temperature)
 
-// Inicialização
+updateParsBttn.addEventListener('click', fetch_update_pairs)
+
 document.addEventListener('DOMContentLoaded', loadPairsData);

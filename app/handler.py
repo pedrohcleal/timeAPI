@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup as bs4
 from unidecode import unidecode
-from app.crud import get_static_countries, get_all_cities, insert_into_table
+from app.crud import get_static_countries, get_all_cities, insert_city_country
 from app.db_config import get_db_connection
 
 
@@ -22,6 +22,7 @@ def get_temperature(country, city):
 
 
 def update_pairs_city_country(conn) -> list[str]:
+    print("update_pairs_city_country")
     countries: list[str] = get_static_countries(conn)
     cities: list[str] = get_all_cities(conn)
     seletor = "body > main > article > section.pdflexi > div > table > *"
@@ -29,23 +30,17 @@ def update_pairs_city_country(conn) -> list[str]:
     for country in countries:
         try:
             response = requests.get(f"https://www.timeanddate.com/weather/{country}")
-            if response.status_code == 200:
-                soup = bs4(response.text, "html.parser")
-                table = soup.select(seletor)
-                for row in table:
-                    city_list = row.select("a")
-                    for city in city_list:
-                        city = unidecode(city.text).strip().lower().replace(" ", "-")
-                        if city not in cities:
-                            insert_into_table(conn=conn, city=city, country=country)
-            else:
-                print(
-                    f"Failed to get data for country '{country}', status code: '{response.status_code}'"
-                )
-                fails.append(
-                    f"Failed to get data for country '{country}', status code: '{response.status_code}'"
-                )
+            response.raise_for_status()
+            soup = bs4(response.text, "html.parser")
+            table = soup.select(seletor)
+            for row in table:
+                city_list = row.select("a")
+                for city in city_list:
+                    city = unidecode(city.text).strip().lower().replace(" ", "-")
+                    if city not in cities:
+                        insert_city_country(conn=conn, city=city, country=country)
         except Exception as e:
-            print(f"Skipping country '{country}', ERRO: '{e}'")
-            fails.append(f"Skipping country '{country}', ERRO: '{e}'")
+            msg = f"Skipping country '{country}', ERRO: '{e}'"
+            print(msg)
+            fails.append(msg)
     return fails
